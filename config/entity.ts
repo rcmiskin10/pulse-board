@@ -1,0 +1,163 @@
+import { LayoutDashboard } from 'lucide-react'
+import type { LucideIcon } from 'lucide-react'
+
+export type FieldType =
+  | 'text'
+  | 'rich-text'
+  | 'number'
+  | 'currency'
+  | 'date'
+  | 'datetime'
+  | 'boolean'
+  | 'select'
+  | 'multi-select'
+  | 'tags'
+  | 'url'
+  | 'email'
+
+export interface EntityField {
+  name: string
+  label: string
+  type: FieldType
+  required: boolean
+  placeholder?: string
+  description?: string
+  options?: string[]
+  defaultValue?: string | number | boolean
+  showInList?: boolean
+  showInForm?: boolean
+}
+
+export interface EntityConfig {
+  name: string
+  pluralName: string
+  slug: string
+  icon: LucideIcon
+  fields: EntityField[]
+  titleField: string
+  descriptionField?: string
+  defaultSort: { field: string; direction: 'asc' | 'desc' }
+  allowCreate: boolean
+  allowEdit: boolean
+  allowDelete: boolean
+  allowExport: boolean
+}
+
+export const entityConfig: EntityConfig = {
+  name: 'Dashboard',
+  pluralName: 'Dashboards',
+  slug: 'dashboards',
+  icon: LayoutDashboard,
+
+  fields: [
+    {
+      name: 'dashboard_name',
+      label: 'Dashboard Name',
+      type: 'text',
+      required: true,
+      placeholder: 'e.g., My SaaS Overview',
+      showInList: true,
+      showInForm: true,
+    },
+    {
+      name: 'connected_accounts',
+      label: 'Connected Accounts',
+      type: 'multi-select',
+      required: false,
+      options: ['Stripe', 'GitHub', 'Twitter', 'LinkedIn', 'Facebook', 'Instagram', 'Slack', 'Discord'],
+      showInList: true,
+      showInForm: true,
+    },
+    {
+      name: 'creation_date',
+      label: 'Creation Date',
+      type: 'date',
+      required: true,
+      showInList: true,
+      showInForm: true,
+    },
+    {
+      name: 'last_updated',
+      label: 'Last Updated',
+      type: 'datetime',
+      required: false,
+      showInList: true,
+      showInForm: false,
+    },
+    {
+      name: 'ai_insights_enabled',
+      label: 'AI Insights Enabled',
+      type: 'boolean',
+      required: true,
+      defaultValue: 'true',
+      showInList: false,
+      showInForm: true,
+    },
+    {
+      name: 'alert_channels',
+      label: 'Alert Channels',
+      type: 'multi-select',
+      required: false,
+      options: ['Slack', 'Discord', 'Email'],
+      showInList: false,
+      showInForm: true,
+    }
+  ],
+
+  titleField: 'dashboard_name',
+  descriptionField: 'connected_accounts',
+  defaultSort: { field: 'created_at', direction: 'desc' },
+
+  allowCreate: true,
+  allowEdit: true,
+  allowDelete: true,
+  allowExport: false,
+}
+
+export function getListFields(): EntityField[] {
+  return entityConfig.fields.filter((f) => f.showInList !== false)
+}
+
+export function getFormFields(): EntityField[] {
+  return entityConfig.fields.filter((f) => f.showInForm !== false)
+}
+
+export function fieldTypeToSql(type: FieldType): string {
+  const mapping: Record<FieldType, string> = {
+    text: 'TEXT',
+    'rich-text': 'TEXT',
+    number: 'INTEGER',
+    currency: 'NUMERIC(10,2)',
+    date: 'DATE',
+    datetime: 'TIMESTAMPTZ',
+    boolean: 'BOOLEAN DEFAULT FALSE',
+    select: 'TEXT',
+    'multi-select': 'TEXT[]',
+    tags: 'TEXT[]',
+    url: 'TEXT',
+    email: 'TEXT',
+  }
+  return mapping[type] || 'TEXT'
+}
+
+export function fieldTypeToZod(field: EntityField): string {
+  const base: Record<FieldType, string> = {
+    text: 'z.string()',
+    'rich-text': 'z.string()',
+    number: 'z.coerce.number()',
+    currency: 'z.coerce.number()',
+    date: 'z.string()',
+    datetime: 'z.string()',
+    boolean: 'z.boolean()',
+    select: `z.enum([${field.options?.map((o) => `'${o}'`).join(', ') || "'draft'"}])`,
+    'multi-select': 'z.array(z.string())',
+    tags: 'z.array(z.string())',
+    url: 'z.string().url()',
+    email: 'z.string().email()',
+  }
+  let schema = base[field.type] || 'z.string()'
+  if (!field.required) {
+    schema += '.optional()'
+  }
+  return schema
+}

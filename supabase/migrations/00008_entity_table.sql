@@ -7,11 +7,11 @@ CREATE TABLE IF NOT EXISTS public.entities (
 
   -- Dashboard fields
   dashboard_name TEXT NOT NULL,
+  description TEXT,
   connected_accounts TEXT[],
-  creation_date DATE NOT NULL,
   last_updated TIMESTAMPTZ,
+  is_public BOOLEAN DEFAULT FALSE NOT NULL,
   ai_insights_enabled BOOLEAN DEFAULT FALSE NOT NULL,
-  alert_channels TEXT[],
 
   -- Timestamps
   created_at TIMESTAMPTZ DEFAULT NOW(),

@@ -1,4 +1,4 @@
-import { BarChart, Zap, Star, Globe, Search, Shield } from 'lucide-react'
+import { BarChart, Zap, Star, Globe, Rocket, Users } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
 
 export interface NavItem {
@@ -58,14 +58,17 @@ export const siteConfig: SiteConfig = {
   name: 'PulseBoard',
   tagline: 'Your entire SaaS business in one beautiful dashboard',
   description: 'Real-time analytics dashboard unifying Stripe, GitHub, and social metrics with AI insights for indie hackers.',
-  url: process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000',
+  url: process.env.NEXT_PUBLIC_APP_URL
+    || (process.env.VERCEL_PROJECT_PRODUCTION_URL ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}` : null)
+    || (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : null)
+    || 'http://localhost:3000',
   company: 'PulseBoard',
 
   mainNav: [
     { title: 'Features', href: '/features' },
     { title: 'Pricing', href: '/pricing' },
     { title: 'Blog', href: '/blog' },
-    { title: 'Docs', href: '/docs' }
+    { title: 'Changelog', href: '/changelog' }
   ],
 
   dashboardNav: [
@@ -78,50 +81,50 @@ export const siteConfig: SiteConfig = {
 
   hero: {
     badge: 'Now with AI-powered insights',
-    headline: 'Your Entire SaaS Business in One Beautiful Dashboard',
-    headlineHighlight: 'One Beautiful Dashboard',
-    subheadline: 'Stop tab-switching between Stripe, GitHub, and Twitter. PulseBoard unifies your MRR, churn, star count, follower growth, and feature usage — then delivers weekly AI insights telling you exactly what\'s working and what needs attention.',
+    headline: 'All Your SaaS Metrics',
+    headlineHighlight: 'In One Dashboard',
+    subheadline: 'Connect Stripe, GitHub, and your social accounts to see MRR, churn, star count, follower growth, and feature usage at a glance. Get weekly AI-generated insights on what\'s working and what needs your attention — built for indie hackers and small SaaS teams.',
     primaryCta: { text: 'Get Started Free', href: '/register' },
     secondaryCta: { text: 'See How It Works', href: '/features' },
-    socialProof: { text: 'Trusted by 2,000+ indie hackers and small SaaS teams', rating: '4.9/5' },
+    socialProof: { text: 'Trusted by 1,200+ indie hackers', rating: '4.9/5' },
   },
 
   features: [
     {
       icon: BarChart,
       title: 'Unified Metrics Dashboard',
-      description: 'See your MRR, churn rate, GitHub stars, and social growth in a single, opinionated view designed for founders — no configuration required.',
+      description: 'See your MRR, churn rate, GitHub stars, social followers, and product usage in a single, beautiful view — no more tab-switching.',
       gradient: 'from-violet-500 to-purple-500',
     },
     {
       icon: Zap,
-      title: 'One-Click Integrations',
-      description: 'Connect Stripe, GitHub, and Twitter/X via OAuth in under 5 minutes. Your dashboard populates instantly with real-time data.',
+      title: '5-Minute OAuth Setup',
+      description: 'Connect Stripe, GitHub, and Twitter/X with a single click each. No code snippets, no event taxonomies — just instant data.',
       gradient: 'from-blue-500 to-cyan-500',
     },
     {
       icon: Star,
-      title: 'Weekly AI Insights',
-      description: 'Receive a personalized weekly digest that highlights anomalies, surfaces correlations, and gives you 2-3 actionable recommendations.',
+      title: 'AI Weekly Digest',
+      description: 'Receive a concise weekly email highlighting what improved, what needs attention, and one actionable recommendation for the week ahead.',
       gradient: 'from-amber-500 to-orange-500',
     },
     {
       icon: Globe,
-      title: 'Build in Public Cards',
-      description: 'Auto-generate beautiful, shareable milestone cards for Twitter/X and LinkedIn. Celebrate your wins and grow your audience effortlessly.',
-      gradient: 'from-emerald-500 to-teal-500',
+      title: 'Public Dashboard Sharing',
+      description: 'Generate a shareable public URL for your metrics — perfect for build-in-public updates, investor decks, and community transparency.',
+      gradient: 'from-emerald-500 to-green-500',
     },
     {
-      icon: Search,
-      title: 'Correlation Engine',
-      description: 'Automatically discover what drives your growth. See how GitHub releases, social posts, and product changes correlate with revenue outcomes.',
-      gradient: 'from-rose-500 to-pink-500',
+      icon: Rocket,
+      title: 'Milestone Celebrations',
+      description: 'Get notified when you cross $1K MRR, hit 500 GitHub stars, or reach follower milestones — celebrate the wins that matter.',
+      gradient: 'from-pink-500 to-rose-500',
     },
     {
-      icon: Shield,
-      title: 'Smart Alerts & Anomaly Detection',
-      description: 'Get notified via Slack, Discord, or email when something important changes — churn spikes, MRR milestones, or viral star growth.',
-      gradient: 'from-indigo-500 to-blue-500',
+      icon: Users,
+      title: 'Indie Hacker Benchmarks',
+      description: 'Compare your churn, growth rate, and engagement against anonymized data from thousands of SaaS companies at your stage.',
+      gradient: 'from-indigo-500 to-violet-500',
     }
   ],
 
@@ -139,8 +142,8 @@ export const siteConfig: SiteConfig = {
       links: [
         { title: 'Features', href: '/features' },
         { title: 'Pricing', href: '/pricing' },
-        { title: 'Integrations', href: '/features#integrations' },
-        { title: 'Changelog', href: '/changelog' }
+        { title: 'Changelog', href: '/changelog' },
+        { title: 'Integrations', href: '/features#integrations' }
       ],
     },
     {
@@ -148,7 +151,6 @@ export const siteConfig: SiteConfig = {
       links: [
         { title: 'About', href: '/about' },
         { title: 'Blog', href: '/blog' },
-        { title: 'Docs', href: '/docs' },
         { title: 'Contact', href: '/contact' }
       ],
     },

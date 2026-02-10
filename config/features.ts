@@ -38,7 +38,7 @@ export const featuresConfig: FeaturesConfig = {
   marketResearch: false,
   notifications: true,
   socialListening: false,
-  teams: false,
+  teams: true,
   waitlist: false
 }
 

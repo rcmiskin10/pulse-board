@@ -24,76 +24,81 @@ export const pricingConfig: {
   model: 'freemium',
 
   defaultLimits: {
-    dashboards: 1
+    dashboards: 1,
+    data_sources: 2,
+    team_members: 1
   },
 
   plans: [
     {
-      id: 'launchpad',
-      name: 'Launchpad',
-      description: 'For pre-revenue and early-stage founders getting started',
+      id: 'starter',
+      name: 'Starter',
+      description: 'Perfect for getting started with your first SaaS metrics dashboard',
       price: { monthly: 0 },
       limits: {
-        dashboards: 1
+        dashboards: 1,
+        data_sources: 2,
+        team_members: 1
       },
       features: [
         '1 dashboard',
-        'Up to 3 integrations',
-        'Track up to $5,000 MRR',
-        'Core metrics: MRR, churn, stars, followers',
-        'Monthly AI insight report',
+        'Connect up to 2 data sources',
+        'Core metrics (MRR, churn, stars)',
         '30-day data retention',
-        'Community benchmarking'
+        'Weekly email digest',
+        '1 team member'
       ],
       cta: 'Get Started Free',
     },
     {
       id: 'growth',
       name: 'Growth',
-      description: 'For indie hackers and small teams with traction',
-      price: { monthly: 29, yearly: 278 },
+      description: 'For indie hackers actively growing their SaaS business',
+      price: { monthly: 19, yearly: 190 },
       priceId: process.env.STRIPE_PRICE_GROWTH,
       limits: {
-        dashboards: 10
+        dashboards: 10,
+        data_sources: -1,
+        team_members: 3
       },
       features: [
         'Up to 10 dashboards',
-        'Unlimited integrations',
-        'Track up to $50,000 MRR',
-        'Weekly AI insights with recommendations',
-        'Correlation engine',
-        'Real-time alerts & anomaly detection',
-        '12-month data retention',
-        'Build-in-public shareable cards',
-        'Custom dashboard widgets',
-        'Email & Slack notifications',
-        'Priority support'
+        'Unlimited data sources',
+        'Full historical data retention',
+        'AI-generated weekly insights',
+        'Cross-source correlation alerts',
+        'Public dashboard sharing',
+        'Peer benchmarking',
+        'Up to 3 team members',
+        '10K product analytics events/mo'
       ],
       highlighted: true,
-      cta: 'Start Free Trial',
+      cta: 'Start 14-Day Free Trial',
     },
     {
       id: 'scale',
       name: 'Scale',
-      description: 'For growing SaaS teams that need deeper insights',
-      price: { monthly: 79, yearly: 758 },
+      description: 'For growing SaaS teams that need advanced analytics and collaboration',
+      price: { monthly: 49, yearly: 490 },
       priceId: process.env.STRIPE_PRICE_SCALE,
       limits: {
-        dashboards: -1
+        dashboards: -1,
+        data_sources: -1,
+        team_members: 10
       },
       features: [
-        'Everything in Growth',
         'Unlimited dashboards',
-        'Unlimited MRR tracking',
-        'Daily AI insights with predictive forecasting',
-        'Team access (up to 5 seats)',
-        'Advanced cohort analysis & segmentation',
-        'API access for custom integrations',
-        'Unlimited data retention',
-        'White-label shareable reports',
-        'Dedicated onboarding call'
+        'Unlimited data sources',
+        'Advanced AI insights with forecasting',
+        'Custom metric definitions',
+        'Unlimited product analytics events',
+        'Slack & Discord alerts',
+        'API access',
+        'Priority support',
+        'Up to 10 team members',
+        'White-label public dashboards'
       ],
-      cta: 'Start Free Trial',
+      cta: 'Start 14-Day Free Trial',
     }
   ],
 }
